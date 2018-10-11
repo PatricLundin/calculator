@@ -4,13 +4,14 @@ import "./Square.css";
 
 
 const Square = (props) => (
-    <div className="Square" style={{backgroundColor: props.color}}>
+    <div className={"Square " + props.type} style={{backgroundColor: props.color}}>
         {props.children}
     </div>
 )
 
 Square.protoTypes = {
-    color: PropTypes.string
+    color: PropTypes.string,
+    type: PropTypes.string.isRequired
 }
 
 Square.defaultProps = {
