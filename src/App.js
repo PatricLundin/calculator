@@ -41,21 +41,24 @@ class App extends Component {
   createValueSquare = number => {
     return (
       <Square key={number} type="value">
-        <p>Value {number + 1}:</p>
-        <input type="number" value={this.state.values[number]} onChange={event => this.onValueChangeHandler(number)(event.target.value)}/>
+        <label className="value-square-label">Value {number + 1}:</label>
+        <input className="value-square-input" type="number" value={this.state.values[number]} 
+               onChange={event => this.onValueChangeHandler(number)(event.target.value)}/>
       </Square>
     )
   }
 
   createResultSquare = () => (
     <Square type="results" color={'pink'}>
-      <div>
-        <input type="checkbox" checked={this.state.isSum} onChange={this.onResultChangeHandler()}/>
-        <label>Sum</label>
-      </div>
-      <div>
-        <input type="checkbox" checked={!this.state.isSum} onChange={this.onResultChangeHandler()}/>
-        <label>Multiply</label>
+      <div className="results-square-wrapper">
+        <div>
+          <input type="checkbox" checked={this.state.isSum} onChange={this.onResultChangeHandler()}/>
+          <label>Sum</label>
+        </div>
+        <div>
+          <input type="checkbox" checked={!this.state.isSum} onChange={this.onResultChangeHandler()}/>
+          <label>Multiply</label>
+        </div>
       </div>
       <p>{`Result: ${this.calculateResult()}`}</p>
     </Square>
