@@ -7,10 +7,11 @@ const NUMBER_VALUE_SQUARES = 3;
 class App extends Component {
   state = {
     values: Array(NUMBER_VALUE_SQUARES).fill(0),
-    isSum: true
+    aggregate: "sum"
   }
 
-  onValueChangeHandler = number => eventValue => {
+  onValueChangeHandler = number => event => {
+    const eventValue = event.target.value;
     this.setState(prevState => {
       let newValues = [...prevState.values];
       newValues[number] = eventValue;
@@ -20,10 +21,11 @@ class App extends Component {
     })
   }
 
-  onResultChangeHandler = () => () => {
+  onResultChangeHandler = () => (event) => {
+    const eventValue = event.target.value;
     this.setState(prevState => {
       return {
-        isSum: !prevState.isSum
+        aggregate: eventValue
       }
     })
   }
@@ -31,7 +33,7 @@ class App extends Component {
   calculateResult = () => {
     let values = [...this.state.values];
     values = values.map(value => parseInt(value)).map(value => value ? value : 0);
-    if(this.state.isSum) {
+    if(this.state.aggregate === "sum") {
       return values.reduce((total, value) => total + value, 0);
     } else {
       return values.reduce((total, value) => total * value);
@@ -43,7 +45,7 @@ class App extends Component {
       <Square key={number} type="value">
         <label className="value-square-label">Value {number + 1}:</label>
         <input className="value-square-input" type="number" value={this.state.values[number]} 
-               onChange={event => this.onValueChangeHandler(number)(event.target.value)}/>
+               onChange={this.onValueChangeHandler(number)}/>
       </Square>
     )
   }
@@ -52,11 +54,11 @@ class App extends Component {
     <Square type="results" color={'pink'}>
       <div className="results-square-wrapper">
         <div>
-          <input type="checkbox" checked={this.state.isSum} onChange={this.onResultChangeHandler()}/>
+          <input type="radio" name="aggregate" value="sum" defaultChecked onChange={this.onResultChangeHandler()}/>
           <label>Sum</label>
         </div>
         <div>
-          <input type="checkbox" checked={!this.state.isSum} onChange={this.onResultChangeHandler()}/>
+          <input type="radio" name="aggregate" value="multiply" onChange={this.onResultChangeHandler()}/>
           <label>Multiply</label>
         </div>
       </div>
