@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import Square from './components/Square';
 import './App.css';
 
-class App extends Component {
+const NUMBER_VALUE_SQUARES = 3;
 
+class App extends Component {
   state = {
-    values: [0, 0, 0],
+    values: Array(NUMBER_VALUE_SQUARES).fill(0),
     isSum: true
   }
 
   onValueChangeHandler = number => eventValue => {
     this.setState(prevState => {
-      const newValues = prevState.values;
+      let newValues = [...prevState.values];
       newValues[number] = eventValue;
       return {
         values: newValues
@@ -28,7 +29,7 @@ class App extends Component {
   }
 
   calculateResult = () => {
-    let { values } = this.state;
+    let values = [...this.state.values];
     values = values.map(value => parseInt(value)).map(value => value ? value : 0);
     if(this.state.isSum) {
       return values.reduce((total, value) => total + value, 0);
@@ -47,7 +48,7 @@ class App extends Component {
   }
 
   createResultSquare = () => (
-    <Square type="results">
+    <Square type="results" color={'pink'}>
       <div>
         <input type="checkbox" checked={this.state.isSum} onChange={this.onResultChangeHandler()}/>
         <label>Sum</label>
@@ -61,10 +62,9 @@ class App extends Component {
   )
 
   render() {
-    const valueSquares = [...Array(3)].map((x, i) => this.createValueSquare(i))
     return (
       <div className="App">
-        {valueSquares}
+        {[...Array(NUMBER_VALUE_SQUARES)].map((x, i) => this.createValueSquare(i))}
         {this.createResultSquare()}
       </div>
     );
