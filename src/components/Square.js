@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import "./Square.css";
 
 
-const Square = (props) => (
-    <div className={"Square " + props.type} style={{backgroundColor: props.color}}>
-        {props.children}
+const Square = ({color, children, type}) => (
+    <div className={"Square " + type} style={{backgroundColor: color}}>
+        {children}
     </div>
 )
 
